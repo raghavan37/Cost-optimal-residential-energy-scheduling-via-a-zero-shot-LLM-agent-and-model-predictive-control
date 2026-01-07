@@ -1,4 +1,4 @@
-# Cost-optimal-residential-energy-scheduling-via-a-zero-shot-LLM-agent-and-model-predictive-control 
+# Cost optimal residential energy scheduling via a zero-shot LLM agent and model predictive control 
 LLM_MPC based HEMS \
 Published on Journal of Building Performance Simulation, Taylor and Francis \
 To cite and read the above article: https://doi.org/10.1080/19401493.2025.2605465 \
