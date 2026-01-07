@@ -2264,39 +2264,3 @@ def run_conversation_with_direct_tool_call(
 
     response_data["tool_output_summary"] = tool_output
     return response_data
-
-
-if __name__ == '__main__':
-
-    # --- 2. Configuration for Demonstrations ---
-    solar_excel_file_path = '/content/drive/MyDrive/HEMS/pv_forecast_2024_4strings.xlsx'
-    demand_data_file = '/content/drive/MyDrive/HEMS/appliances_data_daywise3.xlsx'
-    solar_excel = '/content/drive/MyDrive/solar.xlsx'
-    system_params = {
-        "battery_capacity_kwh": 10.24, "initial_soc": 5.12, "battery_min_soc_kwh": 2.048,
-        "battery_max_soc_kwh": 8.192, "battery_max_charge_rate_kw": 3.0, "battery_max_discharge_rate_kw": 3.0,
-        "battery_efficiency": 0.95, "inverter_efficiency": 0.95, "interval_hours": 0.25,
-        'Ns': 60, 'Np': 10, 'V_cell_nominal': 3.65, "forecast_horizon_intervals": 32,
-        "grid_export_price_factor": 0.01
-    }
-
-    run_conversation_with_gemini = run_conversation_with_direct_tool_call
-    start_time = time.time()
-    print("\n" + "="*80 + "\n--- Running Demonstration: MPC Simulation ---")
-    user_input_1 = "plan energy scheduling for 2024-05-06"
-    response_1 = run_conversation_with_gemini(user_input_1, solar_excel, demand_data_file, system_params)
-    print(json.dumps(response_1, indent=2))
-    end_time= time.time()
-    print(f"Time taken: {end_time - start_time} seconds")
-
-    print("\n" + "="*80 + "\n--- Running Demonstration: Baseline (Reactive, Price-Blind) Simulation ---")
-    user_input_2 = "plan baseline energy schedule for 2024-05-06."
-    response_2 = run_conversation_with_gemini(user_input_2, solar_excel, demand_data_file, system_params)
-    print(json.dumps(response_2, indent=2))
-    start_time = time.time()
-    print("\n" + "="*80 + "\n--- Running Demonstration: Baseline (Heuristic, Price-Aware) Simulation ---")
-    user_input_3 = "run a heuristic plan for 2024-05-06"
-    response_3 = run_conversation_with_gemini(user_input_3, solar_excel, demand_data_file, system_params)
-    print(json.dumps(response_3, indent=2))
-    end_time= time.time()
-    print(f"Time taken: {end_time - start_time} seconds")
