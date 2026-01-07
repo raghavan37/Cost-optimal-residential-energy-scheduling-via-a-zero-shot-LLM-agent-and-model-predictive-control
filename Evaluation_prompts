@@ -1,0 +1,50 @@
+EVALUATION_DATASET = [
+        # Tool: mpc_simulation
+        {"query": "Plan energy for 2024-08-12.", "expected_tool": "mpc_simulation", "expected_params": {"date": "2024-08-12"}},
+        {"query": "I need an optimized energy schedule for tomorrow.", "expected_tool": "mpc_simulation", "expected_params": {"date": "tomorrow"}},
+        {"query": "pln the enrgy for 2024-08-12", "expected_tool": "mpc_simulation", "expected_params": {"date": "2024-08-12"}},
+        {"query": "run mpc for yesterday", "expected_tool": "mpc_simulation", "expected_params": {"date": "yesterday"}},
+        {"query": "Can you create an MPC plan for 2024-06-15?", "expected_tool": "mpc_simulation", "expected_params": {"date": "2024-06-15"}},
+        {"query": "I need the energy optimization for the day after tomorrow.", "expected_tool": "mpc_simulation", "expected_params": {"date": "the day after tomorrow"}},
+
+        # Tool: baseline_reactive_price_blind
+        {"query": "What's the baseline for 2024-07-20?", "expected_tool": "baseline_reactive_price_blind", "expected_params": {"date": "2024-07-20"}},
+        {"query": "generate a basic energy plan for today", "expected_tool": "baseline_reactive_price_blind", "expected_params": {"date": "today"}},
+        {"query": "run a basic simulation for yesterday", "expected_tool": "baseline_reactive_price_blind", "expected_params": {"date": "yesterday"}},
+        {"query": "show me the price-blind plan for tomorrow", "expected_tool": "baseline_reactive_price_blind", "expected_params": {"date": "tomorrow"}},
+
+        # Tool: heuristic_price_aware_baseline
+        {"query": "run a heuristic plan for today", "expected_tool": "heuristic_price_aware_baseline", "expected_params": {"date": "today"}},
+        {"query": "what is the price-aware baseline for 2024-08-15?", "expected_tool": "heuristic_price_aware_baseline", "expected_params": {"date": "2024-08-15"}},
+        {"query": "generate a rule-based energy plan for tomorrow", "expected_tool": "heuristic_price_aware_baseline", "expected_params": {"date": "tomorrow"}},
+
+
+        # Tool: get_solar_forecast & plot_solar_forecast
+        {"query": "Get solar forecast for tomorrow.", "expected_tool": "get_solar_forecast", "expected_params": {"date": "tomorrow"}},
+        {"query": "Show me the PV numbers for 2024-09-10.", "expected_tool": "get_solar_forecast", "expected_params": {"date": "2024-09-10"}},
+        {"query": "what was the solar output on 2024-02-28?", "expected_tool": "get_solar_forecast", "expected_params": {"date": "2024-02-28"}},
+        {"query": "Plot the solar forecast for today.", "expected_tool": "plot_solar_forecast", "expected_params": {"date": "today"}},
+        {"query": "Can you graph the sun power for yesterday?", "expected_tool": "plot_solar_forecast", "expected_params": {"date": "yesterday"}},
+        {"query": "graph the pv power for 2024-07-01", "expected_tool": "plot_solar_forecast", "expected_params": {"date": "2024-07-01"}},
+
+        # Tool: get_electricity_price & plot_electricity_price
+        {"query": "What is the day-ahead price for 2024-10-20?", "expected_tool": "get_electricity_price", "expected_params": {"date": "2024-10-20", "market_type": "day-ahead"}},
+        {"query": "real-time cost for today?", "expected_tool": "get_electricity_price", "expected_params": {"date": "today", "market_type": "real-time"}},
+        {"query": "show me the day ahead market prices for 2024-12-25", "expected_tool": "get_electricity_price", "expected_params": {"date": "2024-12-25", "market_type": "day-ahead"}},
+        {"query": "plot the real time market price for 2024-01-01", "expected_tool": "plot_electricity_price", "expected_params": {"date": "2024-01-01", "market_type": "real-time"}},
+        {"query": "plot real-time electricity cost for tomorrow", "expected_tool": "plot_electricity_price", "expected_params": {"date": "tomorrow", "market_type": "real-time"}},
+
+        # Tool: suggest_optimal_appliance_time_with_mpc
+        {"query": "When should I run the Washing Machine?", "expected_tool": "suggest_optimal_appliance_time_with_mpc", "expected_params": {"appliance_name": "Washing Machine"}},
+        {"query": "Best time for Dish Washer on 2024-11-01", "expected_tool": "suggest_optimal_appliance_time_with_mpc", "expected_params": {"appliance_name": "Dish Washer", "date": "2024-11-01"}},
+        {"query": "what is the best time to use the geyser tomorrow", "expected_tool": "suggest_optimal_appliance_time_with_mpc", "expected_params": {"appliance_name": "Geyser (10 l)", "date": "tomorrow"}},
+        {"query": "What's a good time to run the Iron today?", "expected_tool": "suggest_optimal_appliance_time_with_mpc", "expected_params": {"appliance_name": "Iron", "date": "today"}},
+
+        # Out-of-Scope Queries
+        {"query": "Hello, how are you?", "expected_tool": "N/A", "expected_params": {}},
+        {"query": "What's the weather like?", "expected_tool": "N/A", "expected_params": {}},
+        {"query": "Thank you!", "expected_tool": "N/A", "expected_params": {}},
+        {"query": "is it going to rain?", "expected_tool": "N/A", "expected_params": {}},
+        {"query": "How does the battery work?", "expected_tool": "N/A", "expected_params": {}},
+        {"query": "Good morning", "expected_tool": "N/A", "expected_params": {}},
+    ]
