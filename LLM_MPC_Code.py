@@ -53,7 +53,7 @@ Tool Descriptions:
 Today's date is 2024-09-27.
 """
 try:
-    GEMINI_API_KEY = "AIzaSyBwaCh3ap8QXA-YV-VoJghKsrlA3g1iN54" # This will be automatically configured in many environments
+    GEMINI_API_KEY = "" 
     genai.configure(api_key=GEMINI_API_KEY)
     llm_model_gemini = genai.GenerativeModel(
         'gemini-2.5-flash',
