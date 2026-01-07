@@ -1,5 +1,5 @@
-# Cost-optimal-residential-energy-scheduling-via-a-zero-shot-LLM-agent-and-model-predictive-control
-LLM_MPC based HEMS 
-Published on Journal of Building Performance Simulation, Taylor and Francis
-To cite and read the above article: https://doi.org/10.1080/19401493.2025.2605465
+# Cost-optimal-residential-energy-scheduling-via-a-zero-shot-LLM-agent-and-model-predictive-control \\
+LLM_MPC based HEMS \\
+Published on Journal of Building Performance Simulation, Taylor and Francis\\
+To cite and read the above article: https://doi.org/10.1080/19401493.2025.2605465\\
 Abstract: This paper proposes a novel LLM-MPC framework for intelligent Home Energy Management Systems (HEMS) to address challenges from renewable intermittency and user interaction. Our architecture integrates a zero-shot, instruction-following LLM (Phi-3 Mini) to interpret natural language commands and orchestrate tool calls to the underlying Model Predictive Control (MPC) system. This LLM was selected via a rigorous comparative analysis of state-of-the-art models (including Gemini 2.5 Flash, Llama 3, Gemma 7B, and Phi-3 Mini), validating its high tool-selection accuracy and low latency. The MPC component optimizes battery scheduling based on demand forecasts and constraints, focussing on four primary objectives: minimizing grid electricity bills, maximizing PV selfconsumption, and enhancing self-sufficiency. In a daily scenario, the integrated LLM-MPC achieved a superior financial outcome with a net profit of ₹21.05, significantly outperforming the general MPC (₹19.29) and the price-blind baseline (₹15.24). This framework demonstrates a robust and user-centric approach, effectively balancing economic benefits with operational efficiency in smart homes.
