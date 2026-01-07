@@ -64,38 +64,38 @@ except Exception as e:
     print(f"Could not configure Gemini model: {e}")
     llm_model_gemini = None
 
-# # 2. Ollama API Configuration
-# SYSTEM_PROMPT_OLLAMA = """
-# You are an expert system that translates a user's natural language query into a structured JSON tool call.
-# Your response MUST be a single JSON object with two keys: "tool_name" and "parameters".
-# The "tool_name" must be one of the following: ["mpc_simulation", "baseline_reactive_price_blind", "heuristic_price_aware_baseline", "get_solar_forecast", "plot_solar_forecast", "get_electricity_price", "plot_electricity_price", "control_appliance", "suggest_optimal_appliance_time_with_mpc", "N/A"].
-# Use "N/A" if the user's query is out of scope, a greeting, or nonsensical.
-# The "parameters" must be a JSON object containing the extracted parameters for the tool. All date parameters MUST use the key "date".
+# 2. Ollama API Configuration
+SYSTEM_PROMPT_OLLAMA = """
+You are an expert system that translates a user's natural language query into a structured JSON tool call.
+Your response MUST be a single JSON object with two keys: "tool_name" and "parameters".
+The "tool_name" must be one of the following: ["mpc_simulation", "baseline_reactive_price_blind", "heuristic_price_aware_baseline", "get_solar_forecast", "plot_solar_forecast", "get_electricity_price", "plot_electricity_price", "control_appliance", "suggest_optimal_appliance_time_with_mpc", "N/A"].
+Use "N/A" if the user's query is out of scope, a greeting, or nonsensical.
+The "parameters" must be a JSON object containing the extracted parameters for the tool. All date parameters MUST use the key "date".
 
-# Tool Descriptions:
-# - mpc_simulation: Use for general energy planning, optimization, or scheduling for a full day. Triggers on "plan energy", "optimize schedule", "run mpc". Use this for general "optimization" queries that do NOT name a specific appliance.
-# - baseline_reactive_price_blind: Use for generating a basic, non-optimized, price-blind energy plan. Triggers on "baseline plan", "basic simulation", "price-blind plan".
-# - heuristic_price_aware_baseline: Use for generating a rule-based, price-aware energy plan (better than baseline, simpler than MPC). Triggers on "heuristic plan", "rule-based plan", "price-aware baseline".
-# - get_solar_forecast: Get numerical solar data.
-# - plot_solar_forecast: Create a visual plot of solar data.
-# - get_electricity_price: Get numerical electricity price data.
-# - plot_electricity_price: Create a visual plot of electricity price data.
-# - control_appliance: Directly control an appliance (on/off/schedule).
-# - suggest_optimal_appliance_time_with_mpc: Use ONLY when a specific appliance NAME (e.g., "Washing Machine", "Geyser") is mentioned in the query. Triggers on "when should I run", "best time for". If no appliance is named, DO NOT use this tool.
-# """
-# ollama_client = None
-# if OLLAMA_AVAILABLE:
-#     try:
-#         # By default, the client connects to http://localhost:11434, which is correct for a Colab setup.
-#         ollama_client = ollama.Client()
-#         # Quick check to see if the server is responsive
-#         ollama_client.list()
-#         print("Successfully connected to local Ollama server running in Colab.")
-#     except Exception as e:
-#         print("Could not connect to local Ollama server. Please ensure it's running in your Colab environment using the setup instructions.")
-#         print(f"Error details: {e}")
-#         ollama_client = None
-
+Tool Descriptions:
+- mpc_simulation: Use for general energy planning, optimization, or scheduling for a full day. Triggers on "plan energy", "optimize schedule", "run mpc". Use this for general "optimization" queries that do NOT name a specific appliance.
+- baseline_reactive_price_blind: Use for generating a basic, non-optimized, price-blind energy plan. Triggers on "baseline plan", "basic simulation", "price-blind plan".
+- heuristic_price_aware_baseline: Use for generating a rule-based, price-aware energy plan (better than baseline, simpler than MPC). Triggers on "heuristic plan", "rule-based plan", "price-aware baseline".
+- get_solar_forecast: Get numerical solar data.
+- plot_solar_forecast: Create a visual plot of solar data.
+- get_electricity_price: Get numerical electricity price data.
+- plot_electricity_price: Create a visual plot of electricity price data.
+- control_appliance: Directly control an appliance (on/off/schedule).
+- suggest_optimal_appliance_time_with_mpc: Use ONLY when a specific appliance NAME (e.g., "Washing Machine", "Geyser") is mentioned in the query. Triggers on "when should I run", "best time for". If no appliance is named, DO NOT use this tool.
+"""
+ollama_client = None
+if OLLAMA_AVAILABLE:
+    try:
+        # By default, the client connects to http://localhost:11434, which is correct for a Colab setup.
+        ollama_client = ollama.Client()
+        # Quick check to see if the server is responsive
+        ollama_client.list()
+        print("Successfully connected to local Ollama server running in Colab.")
+    except Exception as e:
+        print("Could not connect to local Ollama server. Please ensure it's running in your Colab environment using the setup instructions.")
+        print(f"Error details: {e}")
+        ollama_client = None
+        
 # --- Modular API Callers for Different Models ---
 
 def call_gemini_for_tool(user_query: str) -> Dict:
@@ -112,31 +112,31 @@ def call_gemini_for_tool(user_query: str) -> Dict:
         print(f"Error during Gemini API call: {e}")
         return {"tool_name": "N/A", "parameters": {"error": f"API call failed: {e}"}}
 
-# def call_ollama_for_tool(user_query: str, model_name: str = 'llama3:8b-instruct') -> Dict:
-#     """ Calls a local Ollama model for tool selection. """
-#     if not OLLAMA_AVAILABLE:
-#         raise ConnectionError("The 'ollama' library is not installed. Please run 'pip install ollama'.")
+def call_ollama_for_tool(user_query: str, model_name: str = 'llama3:8b-instruct') -> Dict:
+    """ Calls a local Ollama model for tool selection. """
+    if not OLLAMA_AVAILABLE:
+        raise ConnectionError("The 'ollama' library is not installed. Please run 'pip install ollama'.")
 
-#     try:
-#         response = ollama.chat(
-#             model=model_name,
-#             messages=[
-#                 {'role': 'system', 'content': SYSTEM_PROMPT_OLLAMA},
-#                 {'role': 'user', 'content': user_query},
-#             ],
-#             options={'temperature': 0.0},
-#             format='json'
-#         )
+    try:
+        response = ollama.chat(
+            model=model_name,
+            messages=[
+                {'role': 'system', 'content': SYSTEM_PROMPT_OLLAMA},
+                {'role': 'user', 'content': user_query},
+            ],
+            options={'temperature': 0.0},
+            format='json'
+        )
 
-#         parsed_json = json.loads(response['message']['content'])
-#         return {"tool_name": parsed_json.get("tool_name", "N/A"), "parameters": parsed_json.get("parameters", {})}
-#     except json.JSONDecodeError as e:
-#         print(f"Error decoding JSON from Ollama for query '{user_query}': {e}")
-#         print(f"Raw Ollama response: {response['message']['content']}")
-#         return {"tool_name": "N/A", "parameters": {"error": "JSONDecodeError"}}
-#     except Exception as e:
-#         print(f"Error during Ollama API call: {e}")
-#         raise e
+        parsed_json = json.loads(response['message']['content'])
+        return {"tool_name": parsed_json.get("tool_name", "N/A"), "parameters": parsed_json.get("parameters", {})}
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON from Ollama for query '{user_query}': {e}")
+        print(f"Raw Ollama response: {response['message']['content']}")
+        return {"tool_name": "N/A", "parameters": {"error": "JSONDecodeError"}}
+    except Exception as e:
+        print(f"Error during Ollama API call: {e}")
+        raise e
 
 
 # --- IMPORTANT: Placeholder definitions for missing variables ---
